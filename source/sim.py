@@ -198,10 +198,10 @@ class Simulation:
         #
         self.table = Table(show_header=True, header_style="bold magenta")
         self.table.add_column("Age", justify="right")
-        self.table.add_column("M", justify="center")
-        self.table.add_column("R", justify="center")
-        self.table.add_column("HSA", justify="right")
-        self.table.add_column("Change", justify="right")
+        #self.table.add_column("M", justify="center")
+        #self.table.add_column("R", justify="center")
+        #self.table.add_column("HSA", justify="right")
+        #self.table.add_column("Change", justify="right")
         self.table.add_column("Roth 401k", justify="right")
         self.table.add_column("Change", justify="right")
         self.table.add_column("Roth IRA", justify="right")
@@ -211,13 +211,13 @@ class Simulation:
         self.table.add_column("Trad 401k", justify="right")
         self.table.add_column("Change", justify="right")
         self.table.add_column("RMD", justify="right")
-        self.table.add_column("Trad IRA", justify="right")
-        self.table.add_column("Change", justify="right")
-        self.table.add_column("RMD", justify="right")
+        #self.table.add_column("Trad IRA", justify="right")
+        #self.table.add_column("Change", justify="right")
+        #self.table.add_column("RMD", justify="right")
         self.table.add_column("Income", justify="right")
         self.table.add_column("Spending", justify="right")
-        self.table.add_column("Deps", justify="center")
-        self.table.add_column("State", justify="center")
+        #self.table.add_column("Deps", justify="center")
+        #self.table.add_column("State", justify="center")
         self.table.add_column("State Tax", justify="right")
         self.table.add_column("Penalties", justify="right")
         self.table.add_column("Federal Tax", justify="right")
@@ -641,7 +641,6 @@ class Simulation:
                     min(this_years_income, self.get_ira_contribution_limit()),
                     whats_left_to_contribute()
                 )
-
                 would_be_agi_if_trad = (
                     this_years_income
                     - hsa_contribution
@@ -676,7 +675,6 @@ class Simulation:
                         whats_left_to_contribute()
                     )
                     roth_ira_contribution += after_tax_contribution
-
                 tax_deductions = (
                     hsa_contribution
                     + trad_401k_contribution
@@ -952,6 +950,7 @@ class Simulation:
                 self.accounts.roth_401k.get_contributions() - roth_401k_withdrawal,
                 whats_left_to_withdrawal()
             )
+            #roth_401k_withdrawal = 0 #cpo
             roth_ira_withdrawal += min(
                 self.accounts.roth_ira.get_contributions() - roth_ira_withdrawal,
                 whats_left_to_withdrawal()
@@ -1233,30 +1232,30 @@ class Simulation:
         #
         self.table.add_row(
             f"{self.get_current_age()}",
-            ":heart_eyes:" if self.is_married() else "",
-            ":tada:" if self.is_retired() else "",
-            f"{self.accounts.hsa.get_value():,.2f}" if self.accounts.hsa.get_value() else "",
-            f"{self.accounts.hsa.get_yearly_diff()}",
-            f"{self.accounts.roth_401k.get_value():,.2f}" if self.accounts.roth_401k.get_value() else "",
+            #":heart_eyes:" if self.is_married() else "",
+            #":tada:" if self.is_retired() else "",
+            #f"{self.accounts.hsa.get_value()//1000:,.0f}" if self.accounts.hsa.get_value() else "",
+            #f"{self.accounts.hsa.get_yearly_diff()}",
+            f"{self.accounts.roth_401k.get_value()//1000:,.0f}" if self.accounts.roth_401k.get_value() else "",
             f"{self.accounts.roth_401k.get_yearly_diff()}",
-            f"{self.accounts.roth_ira.get_value():,.2f}" if self.accounts.roth_ira.get_value() else "",
+            f"{self.accounts.roth_ira.get_value()//1000:,.0f}" if self.accounts.roth_ira.get_value() else "",
             f"{self.accounts.roth_ira.get_yearly_diff()}",
-            f"{self.accounts.taxable.get_value():,.2f}" if self.accounts.taxable.get_value() else "",
+            f"{self.accounts.taxable.get_value()//1000:,.0f}" if self.accounts.taxable.get_value() else "",
             f"{self.accounts.taxable.get_yearly_diff()}",
-            f"{self.accounts.trad_401k.get_value():,.2f}" if self.accounts.trad_401k.get_value() else "",
+            f"{self.accounts.trad_401k.get_value()//1000:,.0f}" if self.accounts.trad_401k.get_value() else "",
             f"{self.accounts.trad_401k.get_yearly_diff()}",
-            f"[yellow]{trad_401k_rmd:,.2f}[/yellow]" if trad_401k_rmd else "",
-            f"{self.accounts.trad_ira.get_value():,.2f}" if self.accounts.trad_ira.get_value() else "",
-            f"{self.accounts.trad_ira.get_yearly_diff()}",
-            f"[yellow]{trad_ira_rmd:,.2f}[/yellow]" if trad_ira_rmd else "",
-            f"[cyan]{self.get_income():,.2f}[/cyan]" if self.get_income() else "",
-            f"[red]{self.get_spending():,.2f}[/red]" if self.get_spending() else "",
-            f"{self.get_num_dependents():d}" if self.get_num_dependents() else "",
-            f"{self.get_current_state()}",
-            f"[red]{state_tax:,.2f}[/red]" if state_tax else "",
-            f"[red]{penalty_fees:,.2f}[/red]" if penalty_fees else "",
-            f"[red]{this_years_federal_taxes:,.2f}[/red]" if this_years_federal_taxes else "",
-            f"[purple]{self.get_total_taxes():,.2f}[/purple]" if self.get_total_taxes() else "",
+            f"[yellow]{trad_401k_rmd//1000:,.0f}[/yellow]" if trad_401k_rmd else "",
+            #f"{self.accounts.trad_ira.get_value()//1000:,.0f}" if self.accounts.trad_ira.get_value() else "",
+            #f"{self.accounts.trad_ira.get_yearly_diff()}",
+            #f"[yellow]{trad_ira_rmd:,.0f}[/yellow]" if trad_ira_rmd else "",
+            f"[cyan]{self.get_income()//1000:,.0f}[/cyan]" if self.get_income() else "",
+            f"[red]{self.get_spending()//1000:,.0f}[/red]" if self.get_spending() else "",
+            #f"{self.get_num_dependents():d}" if self.get_num_dependents() else "",
+            #f"{self.get_current_state()}",
+            f"[red]{state_tax//1000:,.0f}[/red]" if state_tax else "",
+            f"[red]{penalty_fees//1000:,.0f}[/red]" if penalty_fees else "",
+            f"[red]{this_years_federal_taxes//1000:,.0f}[/red]" if this_years_federal_taxes else "",
+            f"[purple]{self.get_total_taxes()//1000:,.0f}[/purple]" if self.get_total_taxes() else "",
         )
 
     def increment_year(self):

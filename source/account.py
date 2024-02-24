@@ -93,9 +93,11 @@ class Account:
 
     def get_yearly_diff(self):
         if self.yearly_diff[self.account_age] < 0:
-            return f"[red]{self.yearly_diff[self.account_age]:+,.2f}[/red]"
+            #return f"[red]{self.yearly_diff[self.account_age]:+,.2f}[/red]"
+            return f"[red]{self.yearly_diff[self.account_age]//1000:+,.0f}[/red]"
         if self.yearly_diff[self.account_age] > 0:
-            return f"[green]{self.yearly_diff[self.account_age]:+,.2f}[/green]"
+            #return f"[green]{self.yearly_diff[self.account_age]:+,.2f}[/green]"
+            return f"[green]{self.yearly_diff[self.account_age]/1000:+,.0f}[/green]"
         return ""
 
     def withdrawal(self, needed, dry_run=False):
